@@ -184,6 +184,7 @@ class ChewieController extends ChangeNotifier {
     this.isLive = false,
     this.allowFullScreen = true,
     this.allowMuting = true,
+    this.onSeek,
     this.systemOverlaysAfterFullScreen = SystemUiOverlay.values,
     this.deviceOrientationsAfterFullScreen = const [
       DeviceOrientation.portraitUp,
@@ -196,6 +197,8 @@ class ChewieController extends ChangeNotifier {
             'You must provide a controller to play a video') {
     _initialize();
   }
+
+  final Function(Duration) onSeek;
 
   /// The controller for the video you want to play
   final VideoPlayerController videoPlayerController;
@@ -355,8 +358,8 @@ class ChewieController extends ChangeNotifier {
   }
 
   Future<void> seekTo(Duration moment) async {
-    notifyListeners();
     await videoPlayerController.seekTo(moment);
+    onSeek?.call(moment);
   }
 
   Future<void> setVolume(double volume) async {
