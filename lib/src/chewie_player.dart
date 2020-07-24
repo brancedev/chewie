@@ -308,6 +308,8 @@ class ChewieController extends ChangeNotifier {
     if (fullScreenByDefault) {
       videoPlayerController.addListener(_fullScreenListener);
     }
+
+    notifyListeners();
   }
 
   void _fullScreenListener() async {
@@ -333,26 +335,32 @@ class ChewieController extends ChangeNotifier {
   }
 
   void togglePause() {
+    notifyListeners();
     isPlaying ? pause() : play();
   }
 
   Future<void> play() async {
+    notifyListeners();
     await videoPlayerController.play();
   }
 
   Future<void> setLooping(bool looping) async {
+    notifyListeners();
     await videoPlayerController.setLooping(looping);
   }
 
   Future<void> pause() async {
+    notifyListeners();
     await videoPlayerController.pause();
   }
 
   Future<void> seekTo(Duration moment) async {
+    notifyListeners();
     await videoPlayerController.seekTo(moment);
   }
 
   Future<void> setVolume(double volume) async {
+    notifyListeners();
     await videoPlayerController.setVolume(volume);
   }
 }
