@@ -1,3 +1,4 @@
+import 'package:chewie/chewie.dart';
 import 'package:chewie/src/chewie_progress_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -5,7 +6,7 @@ import 'package:video_player/video_player.dart';
 
 class MaterialVideoProgressBar extends StatefulWidget {
   MaterialVideoProgressBar(
-    this.controller, {
+    this.controller,this.chewieController, {
     ChewieProgressColors colors,
     this.onDragEnd,
     this.onDragStart,
@@ -13,6 +14,7 @@ class MaterialVideoProgressBar extends StatefulWidget {
   }) : colors = colors ?? ChewieProgressColors();
 
   final VideoPlayerController controller;
+  final ChewieController chewieController;
   final ChewieProgressColors colors;
   final Function() onDragStart;
   final Function() onDragEnd;
@@ -55,7 +57,7 @@ class _VideoProgressBarState extends State<MaterialVideoProgressBar> {
       final Offset tapPos = box.globalToLocal(globalPosition);
       final double relative = tapPos.dx / box.size.width;
       final Duration position = controller.value.duration * relative;
-      controller.seekTo(position);
+      widget.chewieController.seekTo(position);
     }
 
     return GestureDetector(

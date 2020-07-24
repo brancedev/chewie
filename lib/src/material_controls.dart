@@ -375,6 +375,7 @@ class _MaterialControlsState extends State<MaterialControls> {
         padding: EdgeInsets.only(right: 20.0),
         child: MaterialVideoProgressBar(
           controller,
+          chewieController,
           onDragStart: () {
             setState(() {
               _dragging = true;

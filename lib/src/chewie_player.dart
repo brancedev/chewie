@@ -185,6 +185,8 @@ class ChewieController extends ChangeNotifier {
     this.allowFullScreen = true,
     this.allowMuting = true,
     this.onSeek,
+    this.onPause,
+    this.onPlay,
     this.systemOverlaysAfterFullScreen = SystemUiOverlay.values,
     this.deviceOrientationsAfterFullScreen = const [
       DeviceOrientation.portraitUp,
@@ -199,6 +201,8 @@ class ChewieController extends ChangeNotifier {
   }
 
   final Function(Duration) onSeek;
+  final Function() onPlay;
+  final Function() onPause;
 
   /// The controller for the video you want to play
   final VideoPlayerController videoPlayerController;
@@ -338,23 +342,21 @@ class ChewieController extends ChangeNotifier {
   }
 
   void togglePause() {
-    notifyListeners();
     isPlaying ? pause() : play();
   }
 
   Future<void> play() async {
-    notifyListeners();
     await videoPlayerController.play();
+    onPlay?.call();
   }
 
   Future<void> setLooping(bool looping) async {
-    notifyListeners();
     await videoPlayerController.setLooping(looping);
   }
 
   Future<void> pause() async {
-    notifyListeners();
     await videoPlayerController.pause();
+     onPause?.call();
   }
 
   Future<void> seekTo(Duration moment) async {
@@ -363,7 +365,6 @@ class ChewieController extends ChangeNotifier {
   }
 
   Future<void> setVolume(double volume) async {
-    notifyListeners();
     await videoPlayerController.setVolume(volume);
   }
 }

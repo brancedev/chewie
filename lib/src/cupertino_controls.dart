@@ -456,7 +456,9 @@ class _CupertinoControlsState extends State<CupertinoControls> {
       child: Padding(
         padding: EdgeInsets.only(right: 12.0),
         child: CupertinoVideoProgressBar(
+
           controller,
+          chewieController,
           onDragStart: () {
             _hideTimer?.cancel();
           },
